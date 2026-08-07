@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-mckinsey-navy antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  /* McKinsey-style section spacing */
+  .section {
+    @apply py-20 px-6 lg:px-16;
+  }
+
+  /* Card with subtle shadow */
+  .card {
+    @apply bg-white rounded-xl border border-mckinsey-border 
+           shadow-sm hover:shadow-md transition-shadow duration-300
+           p-8;
+  }
+
+  /* Gold accent line */
+  .accent-bar {
+    @apply w-12 h-1 bg-mckinsey-gold rounded-full;
+  }
+
+  /* Navigation link */
+  .nav-link {
+    @apply text-sm font-medium text-mckinsey-muted 
+           hover:text-mckinsey-navy transition-colors duration-200;
+  }
+
+  .nav-link-active {
+    @apply text-mckinsey-navy border-b-2 border-mckinsey-gold pb-1;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply px-6 py-3 bg-mckinsey-navy text-white font-medium 
+           rounded-lg hover:bg-mckinsey-blue transition-colors 
+           duration-200 text-sm;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply px-6 py-3 border border-mckinsey-navy text-mckinsey-navy 
+           font-medium rounded-lg hover:bg-mckinsey-light 
+           transition-colors duration-200 text-sm;
+  }
+
+  /* Status badges */
+  .badge-active {
+    @apply px-3 py-1 bg-emerald-50 text-emerald-700 text-xs 
+           font-medium rounded-full;
+  }
+
+  .badge-coming-soon {
+    @apply px-3 py-1 bg-amber-50 text-amber-700 text-xs 
+           font-medium rounded-full;
+  }
+
+  .badge-beta {
+    @apply px-3 py-1 bg-blue-50 text-blue-700 text-xs 
+           font-medium rounded-full;
+  }
+}
