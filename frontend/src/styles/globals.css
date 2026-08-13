@@ -17,26 +17,29 @@
 }
 
 @layer components {
-  /* McKinsey-style section spacing */
   .section {
     @apply py-20 px-6 lg:px-16;
   }
 
-  /* Card with subtle shadow */
+  /* Glassmorphism card */
   .card {
-    @apply bg-white rounded-xl border border-mckinsey-border 
-           shadow-sm hover:shadow-md transition-shadow duration-300
-           p-8;
+    @apply bg-white/70 backdrop-blur-xl rounded-2xl border border-white/20
+           shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)]
+           transition-all duration-300 p-8;
   }
 
-  /* Gold accent line */
+  /* Glass card on dark bg */
+  .card-glass {
+    @apply bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10
+           shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-8;
+  }
+
   .accent-bar {
-    @apply w-12 h-1 bg-mckinsey-gold rounded-full;
+    @apply w-12 h-1 bg-gradient-to-r from-mckinsey-gold to-mckinsey-teal rounded-full;
   }
 
-  /* Navigation link */
   .nav-link {
-    @apply text-sm font-medium text-mckinsey-muted 
+    @apply text-sm font-medium text-mckinsey-muted
            hover:text-mckinsey-navy transition-colors duration-200;
   }
 
@@ -44,33 +47,90 @@
     @apply text-mckinsey-navy border-b-2 border-mckinsey-gold pb-1;
   }
 
-  /* Primary button */
   .btn-primary {
-    @apply px-6 py-3 bg-mckinsey-navy text-white font-medium 
-           rounded-lg hover:bg-mckinsey-blue transition-colors 
-           duration-200 text-sm;
+    @apply px-6 py-3 bg-gradient-to-r from-mckinsey-teal to-cyan-500 text-white font-medium
+           rounded-xl hover:shadow-[0_8px_24px_rgba(0,160,175,0.4)] hover:-translate-y-0.5
+           transition-all duration-300 text-sm;
   }
 
-  /* Secondary button */
   .btn-secondary {
-    @apply px-6 py-3 border border-mckinsey-navy text-mckinsey-navy 
-           font-medium rounded-lg hover:bg-mckinsey-light 
-           transition-colors duration-200 text-sm;
+    @apply px-6 py-3 border border-white/30 text-white backdrop-blur-sm
+           font-medium rounded-xl hover:bg-white/10
+           transition-all duration-300 text-sm;
   }
 
-  /* Status badges */
   .badge-active {
-    @apply px-3 py-1 bg-emerald-50 text-emerald-700 text-xs 
+    @apply px-3 py-1 bg-emerald-50 text-emerald-700 text-xs
            font-medium rounded-full;
   }
 
   .badge-coming-soon {
-    @apply px-3 py-1 bg-amber-50 text-amber-700 text-xs 
+    @apply px-3 py-1 bg-amber-50 text-amber-700 text-xs
            font-medium rounded-full;
   }
 
   .badge-beta {
-    @apply px-3 py-1 bg-blue-50 text-blue-700 text-xs 
+    @apply px-3 py-1 bg-blue-50 text-blue-700 text-xs
            font-medium rounded-full;
   }
+}
+
+/* Mesh gradient background */
+.mesh-gradient {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 160, 175, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(197, 165, 114, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(0, 160, 175, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #051C2C 0%, #0a2a42 100%);
+}
+
+/* Animated floating orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  animation: float 8s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 300px;
+  height: 300px;
+  background: rgba(0, 160, 175, 0.3);
+  top: 10%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 250px;
+  height: 250px;
+  background: rgba(197, 165, 114, 0.25);
+  top: 40%;
+  right: 10%;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 160, 175, 0.2);
+  bottom: 10%;
+  left: 40%;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* Glow text */
+.glow-text {
+  text-shadow: 0 0 40px rgba(0, 160, 175, 0.3);
+}
+
+/* Stat card glow */
+.stat-glow {
+  text-shadow: 0 0 20px rgba(197, 165, 114, 0.5);
 }
