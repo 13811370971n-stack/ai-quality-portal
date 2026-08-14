@@ -217,6 +217,47 @@ export default function MethodologyPage() {
           )}
         </div>
       </section>
+
+      {/* Quality Toolbox Link */}
+      <section className="section bg-mckinsey-light/30">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-2xl lg:text-3xl font-bold text-mckinsey-navy mb-4">
+            质量工具箱
+          </h2>
+          <p className="text-mckinsey-muted max-w-2xl mx-auto mb-8">
+            150+种质量工具的交互式学习平台。以DMAIC为主线，支持在线使用鱼骨图、控制图、帕累托图等七大基本工具。
+          </p>
+          <a
+            href="/quality-toolbox/"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+          >
+            <span className="text-2xl">🧰</span>
+            <span>打开质量工具箱</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            <div className="card text-center py-4">
+              <div className="text-2xl mb-1">🗺️</div>
+              <div className="text-xs text-mckinsey-muted">DMAIC知识图谱</div>
+            </div>
+            <div className="card text-center py-4">
+              <div className="text-2xl mb-1">⚒️</div>
+              <div className="text-xs text-mckinsey-muted">7大交互式工具</div>
+            </div>
+            <div className="card text-center py-4">
+              <div className="text-2xl mb-1">📚</div>
+              <div className="text-xs text-mckinsey-muted">学习路径</div>
+            </div>
+            <div className="card text-center py-4">
+              <div className="text-2xl mb-1">🎯</div>
+              <div className="text-xs text-mckinsey-muted">智能推荐</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   );
 }
