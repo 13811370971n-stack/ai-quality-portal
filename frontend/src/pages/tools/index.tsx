@@ -22,6 +22,7 @@ const categoryLabels: Record<string, string> = {
   measurement: '测量分析',
   improvement: '改进优化',
   analysis: '数据分析',
+  toolbox: '工具箱',
 };
 
 function StatusBadge({ status }: { status: string }) {
@@ -68,6 +69,12 @@ const fallbackTools: Tool[] = [
     description: 'Automated hypothesis test selection.',
     description_zh: '自动假设检验选择与自然语言解读。',
     category: 'analysis', status: 'coming_soon', icon: 'check2-circle', route: '/tools/ai-hypothesis', requiredRole: 'vip',
+  },
+  {
+    id: 'quality-toolbox', name: 'Quality Toolbox', name_zh: '质量工具箱',
+    description: 'Interactive quality tools for learning and practice - 150+ tools organized by DMAIC.',
+    description_zh: '交互式质量工具学习平台。以DMAIC为主线组织150+工具，支持在线使用鱼骨图、控制图、帕累托图等。含知识图谱、学习路径和智能推荐。',
+    category: 'toolbox', status: 'active', icon: 'toolbox', route: '/tools/quality-toolbox',
   },
 ];
 

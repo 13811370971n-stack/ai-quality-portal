@@ -228,7 +228,7 @@ export default function MethodologyPage() {
             150+种质量工具的交互式学习平台。以DMAIC为主线，支持在线使用鱼骨图、控制图、帕累托图等七大基本工具。
           </p>
           <a
-            href="/quality-toolbox/"
+            href="/tools/quality-toolbox"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
             <span className="text-2xl">🧰</span>

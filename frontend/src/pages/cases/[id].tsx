@@ -217,10 +217,10 @@ export default function CaseDetailPage() {
                       className="w-full px-3 py-2.5 bg-mckinsey-navy text-white text-xs font-medium rounded-lg hover:bg-mckinsey-blue transition-colors">
                       📋 生成8D报告
                     </button>
-                    <a href={`/api/v1/cases/${id}/export-8d`} target="_blank"
-                      className="block w-full px-3 py-2.5 bg-white border border-mckinsey-border text-mckinsey-navy text-xs font-medium rounded-lg hover:bg-mckinsey-light transition-colors text-center">
+                    <button onClick={handleExport8D}
+                      className="w-full px-3 py-2.5 bg-white border border-mckinsey-border text-mckinsey-navy text-xs font-medium rounded-lg hover:bg-mckinsey-light transition-colors text-center">
                       📥 导出 Word
-                    </a>
+                    </button>
                   </div>
                 )}
                 {confirmBtn && (
