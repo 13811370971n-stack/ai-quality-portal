@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
   { href: '/', label: '首页' },
+  { href: '/cases', label: '工作台' },
   { href: '/tools', label: 'AI工具集' },
   { href: '/coach', label: 'AI教练' },
   { href: '/methodology', label: '方法论' },
