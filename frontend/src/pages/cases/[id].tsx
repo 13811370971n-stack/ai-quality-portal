@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -259,7 +261,19 @@ export default function CaseDetailPage() {
                             ? 'bg-mckinsey-navy text-white'
                             : 'bg-white border border-mckinsey-border/60 text-mckinsey-navy shadow-sm'
                         }`}>
+                          {msg.role === 'user' ? (
                           <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
+                        ) : (
+                          <div className="prose prose-sm prose-slate max-w-none text-sm leading-relaxed
+                            prose-headings:text-mckinsey-navy prose-headings:font-semibold prose-headings:mt-4 prose-headings:mb-2
+                            prose-p:my-1.5 prose-p:text-mckinsey-navy
+                            prose-strong:text-mckinsey-navy prose-strong:font-semibold
+                            prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5
+                            prose-table:text-xs prose-th:px-3 prose-th:py-1.5 prose-th:bg-mckinsey-light prose-td:px-3 prose-td:py-1.5 prose-td:border-mckinsey-border
+                            prose-hr:my-3 prose-hr:border-mckinsey-border/50">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                          </div>
+                        )}
                         </div>
                       </div>
                     )}
@@ -276,7 +290,15 @@ export default function CaseDetailPage() {
                         <span className="text-xs text-mckinsey-muted">AI质量工程师</span>
                       </div>
                       <div className="bg-white border border-mckinsey-border/60 rounded-2xl px-5 py-3.5 shadow-sm">
-                        <div className="whitespace-pre-wrap text-sm leading-relaxed text-mckinsey-navy">{streamingContent}</div>
+                        <div className="prose prose-sm prose-slate max-w-none text-sm leading-relaxed
+                            prose-headings:text-mckinsey-navy prose-headings:font-semibold prose-headings:mt-4 prose-headings:mb-2
+                            prose-p:my-1.5 prose-p:text-mckinsey-navy
+                            prose-strong:text-mckinsey-navy prose-strong:font-semibold
+                            prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5
+                            prose-table:text-xs prose-th:px-3 prose-th:py-1.5 prose-th:bg-mckinsey-light prose-td:px-3 prose-td:py-1.5 prose-td:border-mckinsey-border
+                            prose-hr:my-3 prose-hr:border-mckinsey-border/50">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{streamingContent}</ReactMarkdown>
+                          </div>
                       </div>
                     </div>
                   </div>
