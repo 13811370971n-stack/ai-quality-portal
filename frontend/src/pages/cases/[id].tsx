@@ -119,6 +119,25 @@ export default function CaseDetailPage() {
     }
   }
 
+  async function handleExport8D() {
+    try {
+      const res = await fetch(`/api/v1/cases/${id}/export-8d`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `8D_Report_${id}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) { console.error(err); }
+  }
+
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]; if (!file) return;
     setUploading(true);
