@@ -12,6 +12,7 @@ from app.api.v1.cases import router as cases_router
 from app.api.v1.files import router as files_router
 from app.api.v1.export import router as export_router
 from app.api.v1.data_analysis import router as data_analysis_router
+from app.api.v1.paywall import router as paywall_router
 
 router = APIRouter()
 
@@ -24,3 +25,4 @@ router.include_router(cases_router, prefix="/cases", tags=["Quality Cases"])
 router.include_router(files_router, prefix="", tags=["Files"])
 router.include_router(export_router, prefix="", tags=["Export"])
 router.include_router(data_analysis_router, prefix="/analysis", tags=["Data Analysis"])
+router.include_router(paywall_router, prefix="/subscription", tags=["Subscription"])

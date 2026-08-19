@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthGuard from '@/components/auth/AuthGuard';
@@ -15,6 +15,16 @@ const caseTypes = [
 
 export default function NewCasePage() {
   const [step, setStep] = useState(1);
+  const [limitReached, setLimitReached] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      fetch('/api/v1/subscription/check-limit?action=case', { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.json())
+        .then(data => { if (!data.allowed) setLimitReached(true); })
+        .catch(() => {});
+    }
+  }, [token]);
   const [selectedType, setSelectedType] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
@@ -53,6 +63,13 @@ export default function NewCasePage() {
       <div className="pt-16">
         <AuthGuard>
           <div className="max-w-4xl mx-auto px-6 lg:px-16 py-12">
+            {limitReached && (
+              <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl px-5 py-4">
+                <p className="text-sm text-amber-800 font-medium mb-2">本月免费额度已用完</p>
+                <p className="text-xs text-amber-700 mb-3">免费版每月可创建3个质量案例，升级Pro解锁无限使用</p>
+                <a href="/pricing" className="text-xs font-medium text-mckinsey-teal hover:underline">查看升级方案 →</a>
+              </div>
+            )}
             <div className="accent-bar mb-6" />
             <h1 className="text-3xl font-bold text-mckinsey-navy mb-2">解决一个质量问题</h1>
             <p className="text-mckinsey-muted mb-8">AI将陪你完成从问题定义到8D的完整流程</p>
