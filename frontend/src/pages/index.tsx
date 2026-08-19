@@ -125,11 +125,11 @@ export default function HomePage() {
                 <p className="text-xs text-mckinsey-muted mt-1">AI陪你从问题到8D</p>
               </div>
             </Link>
-            <Link href="/tools/ai-spc" className="block">
+            <Link href="/analysis" className="block">
               <div className="card hover:-translate-y-1 transition-all duration-200 text-center p-6 group">
                 <div className="text-3xl mb-3">📊</div>
-                <h3 className="font-semibold text-mckinsey-navy group-hover:text-mckinsey-teal transition-colors">SPC分析</h3>
-                <p className="text-xs text-mckinsey-muted mt-1">控制图 + 过程能力</p>
+                <h3 className="font-semibold text-mckinsey-navy group-hover:text-mckinsey-teal transition-colors">数据分析</h3>
+                <p className="text-xs text-mckinsey-muted mt-1">Excel分析 + AI解读</p>
               </div>
             </Link>
             <Link href="/tools" className="block">
