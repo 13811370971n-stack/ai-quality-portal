@@ -14,6 +14,8 @@ const caseTypes = [
 ];
 
 export default function NewCasePage() {
+  const { token } = useAuth();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [limitReached, setLimitReached] = useState(false);
 
@@ -28,8 +30,6 @@ export default function NewCasePage() {
   const [selectedType, setSelectedType] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
-  const { token } = useAuth();
-  const router = useRouter();
 
   async function handleSubmit() {
     if (!selectedType || !description.trim()) return;
