@@ -1,0 +1,1604 @@
+# Quality Case 数据结构设计
+
+我先给一个核心判断：
+
+> **Quality Case 不是一张“8D表”，而是一个完整的质量问题生命周期对象。**
+
+它应该能够承载：
+
+**问题发生 → 信息收集 → 证据 → 分析 → 根因 → 措施 → 验证 → 关闭 → 知识沉淀 → 学习**
+
+所以它实际上会成为整个 AI 质量大脑的**核心数据容器**。
+
+---
+
+# 一、先定义 Quality Case 到底是什么
+
+我建议定义：
+
+> **Quality Case = 一个需要被调查、分析、解决和闭环的质量事件/质量问题实例。**
+
+例如：
+
+> 客户投诉“产品漏水”
+
+是一个 Case。
+
+而：
+
+> “FMEA怎么做”
+
+不是 Case。
+
+> “分析这份CPK数据”
+
+也不一定是 Case。
+
+它们可能是：
+
+* 一个 Case 的子任务
+* 一个独立的 Analysis Task
+* 一个 Learning Task
+
+这个边界必须明确。
+
+---
+
+# 二、Quality Case 的顶层结构
+
+我建议第一版采用下面的结构：
+
+```text
+Quality Case
+│
+├── 01 Identity
+│
+├── 02 Classification
+│
+├── 03 Problem
+│
+├── 04 Context
+│
+├── 05 Evidence
+│
+├── 06 Investigation
+│
+├── 07 Root Cause
+│
+├── 08 Actions
+│
+├── 09 Verification
+│
+├── 10 Closure
+│
+├── 11 Deliverables
+│
+├── 12 Knowledge
+│
+├── 13 Learning
+│
+├── 14 AI Metadata
+│
+└── 15 Audit & Security
+```
+
+这15个区域构成一个完整 Case。
+
+---
+
+# 三、第一部分：Identity
+
+这是最基础的身份信息。
+
+```text
+case_id
+case_no
+title
+description
+owner_id
+team_id
+organization_id
+created_at
+updated_at
+```
+
+例如：
+
+```text
+case_id:
+CASE-20260818-0001
+
+case_no:
+Q2026-000128
+
+title:
+某型号产品客户投诉漏水
+
+owner:
+张三
+
+team:
+客户质量部
+```
+
+---
+
+# 四、为什么同时需要 case_id 和 case_no？
+
+建议两个都保留。
+
+### case_id
+
+系统内部唯一ID。
+
+例如：
+
+> `01J...`
+
+适合数据库。
+
+### case_no
+
+用户看到的业务编号：
+
+> `Q2026-000128`
+
+质量人员喜欢业务编号。
+
+未来可以：
+
+> NCR-2026-0012
+> CAPA-2026-0031
+> 8D-2026-0088
+
+但是：
+
+> Quality Case
+
+仍然是底层统一对象。
+
+---
+
+# 五、第二部分：Classification
+
+用于回答：
+
+> **“这是一个什么问题？”**
+
+建议：
+
+```text
+case_type
+case_source
+severity
+priority
+industry
+product_category
+process_stage
+quality_domain
+```
+
+例如：
+
+```text
+case_type:
+customer_complaint
+
+case_source:
+customer
+
+severity:
+high
+
+priority:
+urgent
+
+industry:
+automotive
+
+quality_domain:
+product_quality
+
+process_stage:
+assembly
+```
+
+---
+
+# 六、Case Type 建议不要设计得太复杂
+
+MVP第一版：
+
+```text
+customer_complaint
+incoming_material
+process_abnormality
+product_failure
+supplier_issue
+internal_quality_issue
+audit_issue
+other
+```
+
+后面再扩展。
+
+---
+
+# 七、Severity 和 Priority 必须分开
+
+这一点很重要。
+
+### Severity
+
+> 问题本身有多严重。
+
+例如：
+
+> 安全相关风险 = High
+
+### Priority
+
+> 现在要多快处理。
+
+例如：
+
+> 客户要求24小时回复 = Urgent
+
+两个概念不能混为一谈。
+
+---
+
+# 八、第三部分：Problem
+
+这一部分是整个Case最重要的信息之一。
+
+建议至少包含：
+
+```text
+problem_statement
+customer_statement
+observed_symptom
+where_found
+when_found
+how_found
+affected_scope
+occurrence_rate
+impact
+initial_containment
+```
+
+例如：
+
+```text
+problem_statement:
+产品在客户装配后出现密封失效。
+
+where_found:
+customer_line
+
+affected_scope:
+20260812批次
+
+occurrence_rate:
+20 / 1000
+
+impact:
+客户生产线停线风险
+```
+
+---
+
+# 九、这里必须区分三个概念
+
+这是质量系统很容易设计错的地方。
+
+### 用户描述
+
+> 客户说什么。
+
+### AI整理后的问题描述
+
+> AI把资料整理后的表述。
+
+### Confirmed Problem Statement
+
+> 用户确认后的正式问题定义。
+
+所以不要只保存：
+
+> `description`
+
+而应该保存：
+
+```text
+raw_description
+ai_problem_statement
+confirmed_problem_statement
+```
+
+这样以后可以追溯：
+
+> **AI是怎么从原始输入形成正式问题定义的。**
+
+---
+
+# 十、第四部分：Context
+
+很多质量问题离不开上下文。
+
+建议：
+
+```text
+customer
+product
+product_model
+part_number
+project
+batch
+lot
+production_line
+machine
+supplier
+shift
+operator
+date_range
+location
+```
+
+并且：
+
+> **不是所有Case都需要所有字段。**
+
+例如客户投诉：
+
+> customer必填。
+
+内部设备异常：
+
+> machine可能更重要。
+
+所以字段应该支持：
+
+> 条件性出现。
+
+---
+
+# 十一、第五部分：Evidence
+
+我认为这是整个数据模型里最重要的部分。
+
+建议：
+
+```text
+Evidence
+│
+├── evidence_id
+├── type
+├── source
+├── file_id
+├── extracted_content
+├── evidence_statement
+├── related_entities
+├── confidence
+├── verification_status
+├── created_at
+└── created_by
+```
+
+Evidence 类型：
+
+```text
+document
+image
+video
+excel
+measurement
+customer_statement
+system_data
+historical_case
+expert_input
+ai_inference
+```
+
+---
+
+# 十二、为什么 Evidence 必须成为一级对象？
+
+假设AI说：
+
+> “供应商B是高概率根因。”
+
+用户应该能点击：
+
+> **为什么？**
+
+系统显示：
+
+> 证据1：供应商B批次占全部异常的86%
+
+> 证据2：历史3个类似Case均发生于供应商B
+
+> 证据3：材料检测数据存在异常
+
+于是形成：
+
+```text
+Root Cause
+    ↓
+Evidence 1
+Evidence 2
+Evidence 3
+```
+
+而不是：
+
+> AI自己写了一句话。
+
+---
+
+# 十三、Evidence必须有“来源”
+
+建议来源分成：
+
+### User Provided
+
+用户上传。
+
+### Enterprise System
+
+MES/QMS/ERP。
+
+### Knowledge Base
+
+企业文件/标准。
+
+### Historical Case
+
+历史案例。
+
+### AI Inference
+
+AI推理。
+
+这五类数据的可信等级并不一样。
+
+---
+
+# 十四、Evidence还需要“证据状态”
+
+例如：
+
+```text
+unverified
+partially_verified
+verified
+rejected
+conflicting
+```
+
+这非常重要。
+
+例如：
+
+> 客户说“100%漏水”
+
+但内部抽检：
+
+> 20/1000
+
+不能简单覆盖。
+
+而应该：
+
+> **Conflicting Evidence**
+
+这样AI就知道：
+
+> 这个问题不能直接下结论。
+
+---
+
+# 十五、第六部分：Investigation
+
+这里记录：
+
+> **我们到底做了哪些调查。**
+
+建议：
+
+```text
+investigation_id
+investigation_type
+question
+hypothesis
+method
+input_data
+result
+conclusion
+status
+owner
+created_at
+```
+
+例如：
+
+```text
+Question:
+是否为设备3参数偏移导致？
+
+Hypothesis:
+设备3在异常批次存在温度偏移。
+
+Method:
+比较正常批次与异常批次参数。
+
+Result:
+异常批次温度平均高2.8℃。
+
+Conclusion:
+支持该假设，但需进一步验证。
+```
+
+---
+
+# 十六、为什么 Investigation 要独立于 Root Cause？
+
+因为：
+
+> **假设 ≠ 根因。**
+
+一个Case可能有：
+
+5个假设。
+
+其中：
+
+* 2个被排除
+* 2个证据不足
+* 1个最终确认
+
+所以结构应该：
+
+```text
+Case
+ ↓
+Investigations
+ ↓
+Hypotheses
+ ↓
+Evidence
+ ↓
+Conclusion
+ ↓
+Confirmed Root Cause
+```
+
+而不是直接保存：
+
+> root_cause = "温度偏高"
+
+---
+
+# 十七、Root Cause 数据结构
+
+建议：
+
+```text
+root_cause_id
+category
+description
+cause_chain
+status
+confidence
+evidence_ids
+verification_id
+confirmed_by
+confirmed_at
+```
+
+根因还可以分类：
+
+```text
+material
+machine
+method
+man
+measurement
+environment
+design
+management
+supplier
+system
+```
+
+后面可以映射到：
+
+> 6M / 8M / Cause Tree
+
+---
+
+# 十八、Root Cause必须支持“多根因”
+
+这是很重要的。
+
+一个问题可能：
+
+> 材料 + 工艺
+
+共同导致。
+
+所以不能简单：
+
+```text
+root_cause: string
+```
+
+而应该：
+
+```text
+root_causes[]
+```
+
+比如：
+
+```text
+Root Cause A:
+工艺参数偏移
+
+Root Cause B:
+检验控制不足
+```
+
+---
+
+# 十九、第七部分：Actions
+
+建议把行动分三类：
+
+```text
+containment_actions
+corrective_actions
+preventive_actions
+```
+
+每一个Action单独成为对象：
+
+```text
+action_id
+action_type
+description
+owner
+due_date
+status
+priority
+expected_result
+related_root_cause
+verification_plan
+completion_date
+evidence_ids
+```
+
+---
+
+# 二十、为什么Action一定要关联Root Cause？
+
+比如：
+
+Root Cause：
+
+> 温度控制偏差
+
+Action：
+
+> 增加末检
+
+系统应该知道：
+
+> 这个措施并没有真正对应根因。
+
+于是：
+
+> AI可以提出警告。
+
+所以数据关系是：
+
+```text
+Root Cause
+      ↓
+Corrective Action
+      ↓
+Verification
+```
+
+这个关系非常重要。
+
+---
+
+# 二十一、第八部分：Verification
+
+这也是质量系统的核心。
+
+Verification至少分：
+
+### Root Cause Verification
+
+> 根因确认了吗？
+
+### Action Effectiveness
+
+> 措施有效吗？
+
+### Recurrence Prevention
+
+> 是否避免再发生？
+
+所以建议结构：
+
+```text
+verification_id
+verification_type
+method
+baseline
+target
+result
+data
+conclusion
+status
+verified_by
+verified_at
+evidence_ids
+```
+
+---
+
+# 二十二、Verification不要只有“通过/不通过”
+
+建议：
+
+```text
+effective
+partially_effective
+ineffective
+insufficient_evidence
+not_required
+```
+
+因为实际质量工作里：
+
+> 很多措施不是简单的Yes/No。
+
+---
+
+# 二十三、第九部分：Closure
+
+Case最终如何关闭？
+
+建议：
+
+```text
+closure_status
+closure_reason
+final_conclusion
+customer_accepted
+internal_approved
+closed_by
+closed_at
+```
+
+例如：
+
+> 根因确认
+> 措施完成
+> 连续3批验证
+> 客户确认
+> Case关闭
+
+---
+
+# 二十四、Case状态机
+
+这是数据结构最重要的一部分之一。
+
+建议第一版：
+
+```text
+DRAFT
+↓
+INTAKE
+↓
+INVESTIGATION
+↓
+ROOT_CAUSE_ANALYSIS
+↓
+ROOT_CAUSE_VERIFICATION
+↓
+ACTION_PLANNING
+↓
+ACTION_IMPLEMENTATION
+↓
+EFFECTIVENESS_VERIFICATION
+↓
+CLOSING
+↓
+CLOSED
+```
+
+同时允许：
+
+> `REOPENED`
+
+例如：
+
+> 问题再次发生。
+
+那么：
+
+```text
+CLOSED
+ ↓
+REOPENED
+ ↓
+INVESTIGATION
+```
+
+---
+
+# 二十五、第十部分：Deliverables
+
+Case不是只生成8D。
+
+将来可以输出：
+
+```text
+8D
+NCR
+CAPA
+RCA Report
+Management Report
+Customer Response
+FMEA Update
+Control Plan Update
+Presentation
+```
+
+所以：
+
+```text
+Deliverable
+│
+├── type
+├── version
+├── file
+├── generated_by
+├── source_sections
+├── status
+└── approved_by
+```
+
+---
+
+# 二十六、这一点对未来非常重要：版本管理
+
+例如：
+
+8D v1
+
+↓
+
+用户修改
+
+↓
+
+8D v2
+
+↓
+
+客户反馈
+
+↓
+
+8D v3
+
+所以不能简单：
+
+> `8d_file_url`
+
+而应该：
+
+```text
+deliverables
+    ├── v1
+    ├── v2
+    └── v3
+```
+
+这也是质量管理软件非常重要的特点：
+
+> **任何重要文件都应该可追溯。**
+
+---
+
+# 二十七、第十一部分：Knowledge
+
+Case完成之后，要不要沉淀成知识？
+
+我的答案是：
+
+> **要，但不能自动无条件进入公共知识库。**
+
+建议：
+
+```text
+knowledge_status
+knowledge_category
+approved_for_reuse
+knowledge_tags
+similarity_features
+```
+
+例如：
+
+> Case完成后：
+
+AI建议：
+
+> “该案例可能适合沉淀为‘电池包密封失效’案例。”
+
+用户：
+
+> ✅ 允许沉淀
+
+然后进入：
+
+> 企业案例库。
+
+---
+
+# 二十八、第十二部分：Learning
+
+这是连接我们前面讨论的“AI + 培训”的地方。
+
+Case可以记录：
+
+```text
+learning_opportunities
+skills_detected
+weaknesses
+recommended_courses
+learning_mode_used
+learning_progress
+```
+
+例如AI发现：
+
+> 用户在根因验证环节多次选择错误。
+
+于是：
+
+> `skill_gap = RCA / hypothesis verification`
+
+系统推荐：
+
+> “根因分析与验证实战”
+
+所以：
+
+> **Quality Case也是用户能力画像的数据来源。**
+
+---
+
+# 二十九、第十三部分：AI Metadata
+
+AI本身的过程也要保存。
+
+例如：
+
+```text
+ai_sessions
+ai_actions
+ai_recommendations
+ai_confidence
+ai_sources
+ai_model
+prompt_version
+agent_version
+```
+
+为什么需要？
+
+以后出现：
+
+> “为什么AI当时这么判断？”
+
+我们必须能追踪。
+
+---
+
+# 三十、尤其要保存“AI Recommendation”
+
+例如：
+
+```text
+AI Recommendation:
+建议调查设备3参数记录
+
+Basis:
+证据A + 证据B
+
+Confidence:
+0.82
+
+User Decision:
+accepted
+
+User Modification:
+增加供应商批次数据
+
+Final Outcome:
+验证成立
+```
+
+这样未来我们甚至可以研究：
+
+> **AI建议被质量工程师接受的比例。**
+
+这个指标非常有价值。
+
+---
+
+# 三十一、第十四部分：Audit & Security
+
+企业质量系统一定要考虑：
+
+```text
+created_by
+updated_by
+approved_by
+audit_log
+data_classification
+access_level
+organization_id
+tenant_id
+```
+
+并且建议从第一天就设计：
+
+> **多租户**
+
+因为以后一定会进入企业版。
+
+---
+
+# 三十二、最关键的数据关系
+
+整个Quality Case可以用下面这张关系图理解：
+
+```text
+                    Quality Case
+                         │
+        ┌────────────────┼────────────────┐
+        ↓                ↓                ↓
+     Problem          Evidence        Context
+        │                │
+        ↓                ↓
+ Investigation ←────── Evidence
+        │
+        ↓
+   Hypothesis
+        │
+        ↓
+ Root Cause
+        │
+        ↓
+    Action
+        │
+        ↓
+ Verification
+        │
+        ↓
+    Closure
+        │
+        ├────────→ 8D / CAPA / NCR
+        │
+        ├────────→ Knowledge
+        │
+        └────────→ Learning
+```
+
+这实际上已经是我们的核心业务模型。
+
+---
+
+# 三十三、我建议不要让所有数据都塞在一个JSON里
+
+技术实现上需要特别注意：
+
+> **Quality Case虽然在业务上是一个对象，但数据库上不能是一张超级大表。**
+
+建议：
+
+### 主表
+
+`quality_cases`
+
+保存：
+
+* Identity
+* Classification
+* Status
+* Owner
+* 时间
+* 组织
+
+### 子表
+
+`case_problems`
+
+`case_evidences`
+
+`case_investigations`
+
+`case_hypotheses`
+
+`case_root_causes`
+
+`case_actions`
+
+`case_verifications`
+
+`case_deliverables`
+
+`case_knowledge`
+
+`case_learning`
+
+`case_ai_events`
+
+`case_audit_logs`
+
+这样后期扩展会容易很多。
+
+---
+
+# 三十四、建议的数据实体关系
+
+```text
+quality_cases
+     │
+     ├── 1:N case_problems
+     ├── 1:N case_evidences
+     ├── 1:N case_investigations
+     │        └── 1:N hypotheses
+     │
+     ├── 1:N root_causes
+     │        └── N:N evidences
+     │
+     ├── 1:N actions
+     │        └── N:N root_causes
+     │
+     ├── 1:N verifications
+     │
+     ├── 1:N deliverables
+     │
+     ├── 1:N knowledge_items
+     │
+     ├── 1:N learning_records
+     │
+     ├── 1:N ai_events
+     │
+     └── 1:N audit_logs
+```
+
+---
+
+# 三十五、一个完整Case的数据示例
+
+下面用一个简化案例看一下：
+
+```json
+{
+  "case_id": "CASE-20260818-0001",
+  "title": "产品客户投诉漏水",
+  "case_type": "customer_complaint",
+  "industry": "automotive",
+  "severity": "high",
+  "priority": "urgent",
+
+  "problem": {
+    "customer_statement": "产品装配后发生漏水",
+    "confirmed_problem_statement": "某型号产品在客户装配后发生密封失效，2026-08-12至2026-08-14发现20件异常，涉及批次B20260812。"
+  },
+
+  "context": {
+    "product": "密封组件A",
+    "customer": "客户A",
+    "batch": "B20260812",
+    "production_line": "L03"
+  },
+
+  "evidence": [
+    {
+      "id": "EV001",
+      "type": "customer_photo",
+      "verification_status": "verified"
+    },
+    {
+      "id": "EV002",
+      "type": "excel",
+      "verification_status": "verified"
+    }
+  ],
+
+  "investigations": [
+    {
+      "question": "设备3参数是否异常？",
+      "hypothesis": "设备3存在温度偏移",
+      "status": "confirmed"
+    }
+  ],
+
+  "root_causes": [
+    {
+      "description": "设备3关键温度参数偏离标准范围",
+      "status": "confirmed",
+      "confidence": "high",
+      "evidence_ids": ["EV002"]
+    }
+  ],
+
+  "actions": {
+    "containment": [],
+    "corrective": [],
+    "preventive": []
+  },
+
+  "verification": [],
+
+  "status": "ROOT_CAUSE_VERIFICATION"
+}
+```
+
+这只是概念模型，实际开发时会拆成关系型实体。
+
+---
+
+# 三十六、Quality Case有一个非常重要的“时间轴”
+
+我建议前端不要只展示字段。
+
+还应该有：
+
+# Case Timeline
+
+例如：
+
+```text
+08/18 09:05
+Case创建
+
+08/18 09:12
+上传客户投诉
+
+08/18 09:15
+AI完成问题信息提取
+
+08/18 09:21
+用户确认Problem Statement
+
+08/18 09:35
+发现3个候选根因
+
+08/18 10:10
+上传设备参数数据
+
+08/18 10:15
+AI完成数据分析
+
+08/18 10:30
+用户确认根因
+
+08/18 11:05
+制定纠正措施
+
+08/20
+验证改善效果
+
+08/22
+生成最终8D
+
+08/22
+Case关闭
+```
+
+这对于：
+
+> 审核、客户沟通、企业管理
+
+都非常有价值。
+
+---
+
+# 三十七、再往前一步：Quality Case不只是“问题”，还是一个“图”
+
+随着产品发展，它会逐渐变成：
+
+```text
+             Customer
+                 │
+                 ↓
+               Case
+          ↙      ↓       ↘
+      Product   Process   Batch
+          ↓       ↓         ↓
+       Failure   Machine   Supplier
+          ↓       ↓         ↓
+            Root Cause
+                 ↓
+               Action
+                 ↓
+            Verification
+                 ↓
+               FMEA
+                 ↓
+          Control Plan
+```
+
+这就是未来：
+
+# Quality Knowledge Graph
+
+的基础。
+
+---
+
+# 三十八、Quality Case与FMEA的关系
+
+这是我们以后一定要设计的。
+
+例如Case：
+
+> “电池包漏液”
+
+最终根因：
+
+> 密封材料压缩量不足。
+
+那么AI可以建议：
+
+> “FMEA是否存在对应失效模式/原因？”
+
+如果没有：
+
+> 创建FMEA更新建议。
+
+如果已有：
+
+> 检查当前控制措施是否覆盖该问题。
+
+最终：
+
+```text
+Case
+ ↓
+Root Cause
+ ↓
+FMEA
+ ↓
+Control Plan
+ ↓
+SPC
+```
+
+这会形成从：
+
+> **质量问题**
+
+到：
+
+> **质量预防**
+
+的闭环。
+
+---
+
+# 三十九、Quality Case与培训的关系
+
+同一个Case又可以反过来生成学习数据：
+
+```text
+Case
+ ↓
+AI识别用户操作
+ ↓
+发现能力短板
+ ↓
+Skill Profile
+ ↓
+推荐训练
+ ↓
+完成训练
+ ↓
+重新解决Case
+```
+
+因此：
+
+> **Quality Case既是业务对象，也是用户学习对象。**
+
+这是我们“AI + Learning”模式非常重要的一点。
+
+---
+
+# 四十、我建议最终把Quality Case设计成“四个核心层”
+
+如果从产品角度进一步简化，其实所有复杂结构都可以归到四层：
+
+## Layer 1：Facts
+
+> **发生了什么？**
+
+问题、数据、文件、事实。
+
+## Layer 2：Reasoning
+
+> **为什么发生？**
+
+假设、分析、根因、证据。
+
+## Layer 3：Action
+
+> **怎么办？**
+
+遏制、纠正、预防。
+
+## Layer 4：Learning
+
+> **以后怎么避免？**
+
+验证、知识、FMEA、Control Plan、能力提升。
+
+所以：
+
+```text
+FACTS
+  ↓
+REASONING
+  ↓
+ACTION
+  ↓
+LEARNING
+```
+
+我认为这可以成为整个系统的数据哲学。
+
+---
+
+# 四十一、MVP阶段不要把所有字段都做出来
+
+非常重要。
+
+第一版 `Quality Case` 我建议只做这些核心对象：
+
+### 必做
+
+* Case基本信息
+* Problem
+* Context
+* Evidence
+* Investigation
+* Root Cause
+* Action
+* Verification
+* Deliverable
+* Status
+* Timeline
+* AI Event
+
+### 第二阶段
+
+* Knowledge
+* Learning
+* FMEA关联
+* Control Plan关联
+* 历史Case智能匹配
+
+### 企业版
+
+* QMS/MES/ERP数据
+* 多工厂
+* 企业知识图谱
+* 审批
+* 权限
+* 审计
+* 组织级指标
+
+---
+
+# 四十二、我现在建议把Quality Case定义为产品的“核心神经元”
+
+整个产品以后可以这样理解：
+
+```text
+               AI Quality Brain
+                      │
+              ┌───────┴───────┐
+              ↓               ↓
+        Quality Cases     Knowledge
+              │               │
+       ┌──────┼──────┐        │
+       ↓      ↓      ↓        ↓
+      RCA    8D    FMEA    Standards
+       │      │      │        │
+       └──────┼──────┘        │
+              ↓               ↓
+          Learning ←──── Knowledge
+              │
+              ↓
+           User Skill
+```
+
+**Case是中心，AI是能力，知识是依据，规则是约束，学习是增长。**
+
+---
+
+# 四十三、这轮设计以后，我认为我们已经可以确定一个非常重要的产品决策
+
+以后不要把产品设计成：
+
+> **“AI聊天记录”**
+
+而应该设计成：
+
+> **“AI工作案例”**
+
+用户的历史不是：
+
+> 我和AI聊过什么。
+
+而是：
+
+> **我解决过哪些质量问题。**
+
+这个区别非常大。
+
+---
+
+# 四十四、下一步建议
+
+现在 `Quality Case` 的业务数据模型已经基本形成。
+
+下一步最值得做的不是继续加字段，而是把它和AI真正接起来：
+
+> # **Quality Case × AI Agent 执行模型**
+
+具体设计：
+
+```text
+用户创建Case
+   ↓
+Case Agent读取Case状态
+   ↓
+决定下一步任务
+   ↓
+调用知识库 / 数据分析 / Rule Engine
+   ↓
+生成AI建议
+   ↓
+用户确认
+   ↓
+写回Case
+   ↓
+更新Case状态
+   ↓
+继续执行
+```
+
+也就是要进一步回答：
+
+> **当Case处于“ROOT_CAUSE_ANALYSIS”状态时，AI到底能调用哪些工具？**
+>
+> **当进入“ROOT_CAUSE_VERIFICATION”时，AI应该自动检查什么？**
+>
+> **当用户上传Excel时，系统如何把分析结果写回Evidence和Verification？**
+
+这一步做完，我们就能把现在的“AI质量大脑架构”真正落到**Agent流程和技术PRD**上。
