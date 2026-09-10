@@ -19,7 +19,8 @@ class QualityCase(Base):
     problem_statement = Column(Text, nullable=True)
     root_cause = Column(Text, nullable=True)
     measures = Column(Text, nullable=True)  # JSON string
-    current_step = Column(String(50), default="describe")  # describe, define, rca, verify, measures, 8d
+    current_step = Column(String(50), default="describe")
+    archived = Column(Boolean, default=False)  # describe, define, rca, verify, measures, 8d
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 

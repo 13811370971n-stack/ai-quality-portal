@@ -1,5 +1,6 @@
 import Navbar from './Navbar';
 import Footer from './Footer';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import { useRouter } from 'next/router';
 
 interface LayoutProps {
@@ -17,6 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       <Navbar />
       <main className="flex-1">{children}</main>
       {!hideFooter && <Footer />}
+      <FeedbackWidget />
     </div>
   );
 }

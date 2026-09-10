@@ -1,0 +1,15 @@
+[Unit]
+Description=SPC Tool Web (Dash Embedded)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/Projects/spc-tool-web
+Environment=PATH=/root/Projects/spc-tool-web/venv/bin:/usr/bin
+ExecStart=/root/Projects/spc-tool-web/venv/bin/python run_embedded.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

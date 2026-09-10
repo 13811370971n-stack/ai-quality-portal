@@ -15,6 +15,8 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithPhone: (phone: string, code: string, nickname?: string) => Promise<void>;
+  refreshUser: () => Promise<void>;
   register: (email: string, password: string, nickname?: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -82,6 +84,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(data.user);
   }
 
+  async function loginWithPhone(phone: string, code: string, nickname?: string) {
+    const res = await fetch(`${API_BASE}/auth/sms/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, code, nickname }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || 'Verification failed');
+    }
+    const data = await res.json();
+    localStorage.setItem('auth_token', data.access_token);
+    setToken(data.access_token);
+    setUser(data.user);
+  }
+
+  async function refreshUser() {
+    const t = localStorage.getItem('auth_token');
+    if (t) await fetchMe(t);
+  }
+
   async function register(email: string, password: string, nickname?: string) {
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
@@ -111,6 +134,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         token,
         loading,
         login,
+        loginWithPhone,
+        refreshUser,
         register,
         logout,
         isAuthenticated: !!user,

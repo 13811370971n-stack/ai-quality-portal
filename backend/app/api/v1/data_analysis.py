@@ -161,46 +161,26 @@ async def upload_and_analyze(
 
 
 @router.post("/interpret")
+@router.post("/interpret")
 async def ai_interpret(
     analysis_result: str = Form(...),
     question: str = Form(default=""),
     user: User = Depends(require_user),
 ):
     """Get AI interpretation of analysis results via SSE stream."""
-    system_prompt = """你是一位资深质量数据分析专家。你收到了一份质量数据的统计分析结果。
+    system_prompt = """You are a quality data analysis expert. Analyze the statistical results provided and give insights in Chinese.
 
-你的任务：
-1. 用通俗易懂的语言解释数据分析结果
-2. 识别关键发现（异常、趋势、能力不足等）
-3. 给出质量改善建议
-4. 如果有Cpk数据，评估过程能力等级
+Output format:
+**Data Overview** - Brief description
+**Key Findings** - Anomalies, trends, capability issues
+**Process Capability** - If Cpk data available
+**Recommendations** - Quality improvement suggestions
 
-输出格式：
-**【数据概览】**
-简要描述数据集
+Be concise and professional. Use Chinese."""
 
-**【关键发现】**
-- 发现1
-- 发现2
-
-**【过程能力评估】**（如有Cpk）
-- Cpk评级和解读
-
-**【异常检测】**（如有）
-- 异常描述
-
-**【改善建议】**
-- 建议1
-- 建议2
-
-使用中文回答，简洁专业。"""
-
-    user_content = f"分析结果：
-{analysis_result[:3000]}"
+    user_content = "Analysis results: " + analysis_result[:3000]
     if question:
-        user_content += f"
-
-用户问题：{question}"
+        user_content = user_content + " User question: " + question
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -210,9 +190,11 @@ async def ai_interpret(
     async def generate():
         try:
             async for chunk in chat_completion_stream(messages):
-                yield f"data: {json.dumps({'content': chunk})}\n\n"
+                import json as _json
+                yield "data: " + _json.dumps({"content": chunk}) + "\n\n"
         except Exception as e:
-            yield f"data: {json.dumps({'error': str(e)})}\n\n"
+            import json as _json
+            yield "data: " + _json.dumps({"error": str(e)}) + "\n\n"
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(

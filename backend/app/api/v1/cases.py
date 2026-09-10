@@ -12,7 +12,7 @@ import json
 from app.database.session import get_db
 from app.models.user import User
 from app.models.quality_case import QualityCase, CaseMessage
-from app.models.evidence import CaseEvidence, CaseTimeline
+from app.models.evidence import CaseEvidence, CaseTimeline, CaseRootCause, CaseAction
 from app.core.security import require_user
 from app.core.quality_agent import build_messages
 from app.core.ai_engine import chat_completion_stream
@@ -113,6 +113,7 @@ async def list_cases(
             "case_type": c.case_type,
             "status": c.status,
             "current_step": c.current_step,
+            "archived": bool(getattr(c, "archived", False)),
             "problem_statement": c.problem_statement[:100] if c.problem_statement else None,
             "created_at": c.created_at.isoformat() if c.created_at else None,
             "updated_at": c.updated_at.isoformat() if c.updated_at else None,
@@ -273,12 +274,31 @@ async def chat_with_ai(
         if m.role in ("user", "assistant")
     ]
 
+    # Gather uploaded evidence with extracted text for AI context
+    evidence_rows = db.query(CaseEvidence).filter(
+        CaseEvidence.case_id == case.id,
+        CaseEvidence.content.isnot(None),
+    ).order_by(CaseEvidence.id).all()
+    evidence_summaries = [
+        {"title": e.title, "type": e.evidence_type, "content": e.content}
+        for e in evidence_rows if e.content and len(e.content) > 20
+    ]
+
+    # Gather candidate root causes
+    rc_rows = db.query(CaseRootCause).filter(CaseRootCause.case_id == case.id).all()
+    root_causes = [
+        {"description": rc.description, "status": rc.status, "category_label": rc.category}
+        for rc in rc_rows
+    ]
+
     messages = build_messages(
         case_type=case.case_type,
         current_step=case.current_step,
         history=history,
         problem_statement=case.problem_statement,
         root_cause=case.root_cause,
+        evidence_summaries=evidence_summaries,
+        root_causes=root_causes,
     )
 
     async def generate():
@@ -383,3 +403,65 @@ async def generate_8d(
     db.commit()
 
     return {"report": report, "case_title": case.title, "case_type": case.case_type}
+
+@router.delete("/{case_id}")
+async def delete_case(
+    case_id: int,
+    user: User = Depends(require_user),
+    db: Session = Depends(get_db),
+):
+    """Permanently delete a case and all related records."""
+    case = db.query(QualityCase).filter(
+        QualityCase.id == case_id, QualityCase.user_id == user.id
+    ).first()
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    import os as _os
+    for ev in db.query(CaseEvidence).filter(CaseEvidence.case_id == case_id).all():
+        if ev.file_path and _os.path.exists(ev.file_path):
+            try:
+                _os.remove(ev.file_path)
+            except OSError:
+                pass
+
+    db.query(CaseRootCause).filter(CaseRootCause.case_id == case_id).delete()
+    db.query(CaseAction).filter(CaseAction.case_id == case_id).delete()
+    db.query(CaseEvidence).filter(CaseEvidence.case_id == case_id).delete()
+    db.query(CaseTimeline).filter(CaseTimeline.case_id == case_id).delete()
+    db.query(CaseMessage).filter(CaseMessage.case_id == case_id).delete()
+    db.delete(case)
+    db.commit()
+    return {"status": "deleted", "case_id": case_id}
+
+
+class ArchiveRequest(BaseModel):
+    archived: bool = True
+
+
+@router.put("/{case_id}/archive")
+async def archive_case(
+    case_id: int,
+    req: ArchiveRequest,
+    user: User = Depends(require_user),
+    db: Session = Depends(get_db),
+):
+    """Archive or unarchive a case."""
+    case = db.query(QualityCase).filter(
+        QualityCase.id == case_id, QualityCase.user_id == user.id
+    ).first()
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    case.archived = req.archived
+    if req.archived and case.status != "closed":
+        case.status = "closed"
+    case.updated_at = datetime.now(timezone.utc)
+    db.add(CaseTimeline(
+        case_id=case_id,
+        event_type="archived" if req.archived else "unarchived",
+        description="\u6848\u4f8b\u5df2\u5f52\u6863" if req.archived else "\u6848\u4f8b\u5df2\u53d6\u6d88\u5f52\u6863",
+        actor="user",
+    ))
+    db.commit()
+    return {"status": "archived" if req.archived else "unarchived", "case_id": case_id}

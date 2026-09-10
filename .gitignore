@@ -11,3 +11,6 @@ build/
 .venv/
 venv/
 data/*.db
+*.env
+docs/deepseektoken.txt
+*token*.txt

@@ -1,0 +1,15 @@
+[Unit]
+Description=MSA Tool Web (Dash) - AI-MSA measurement system analysis
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/Projects/msa-tool-web
+Environment=PATH=/root/Projects/msa-tool-web/venv/bin:/usr/bin:/bin
+ExecStart=/root/Projects/msa-tool-web/venv/bin/python run.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

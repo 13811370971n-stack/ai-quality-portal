@@ -1,0 +1,521 @@
+{
+  "timestamp": "2026-09-09T10:34:06.177821",
+  "total": 75,
+  "pass": 219,
+  "fail": 2,
+  "broken_links": {},
+  "results": [
+    {
+      "name": "Backend",
+      "url": "http://localhost:8000/health",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Frontend",
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Nginx",
+      "url": "http://localhost:8080/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "SPC",
+      "url": "http://localhost:8050/tools/ai-spc/app/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "MSA",
+      "url": "http://localhost:8052/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Homepage",
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Login",
+      "url": "http://localhost:3000/login",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Register",
+      "url": "http://localhost:3000/register",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Tools Index",
+      "url": "http://localhost:3000/tools",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Analysis",
+      "url": "http://localhost:3000/analysis",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Pricing",
+      "url": "http://localhost:3000/pricing",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "About",
+      "url": "http://localhost:3000/about",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Cases",
+      "url": "http://localhost:3000/cases",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Cases New",
+      "url": "http://localhost:3000/cases/new",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Profile",
+      "url": "http://localhost:3000/profile",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Admin",
+      "url": "http://localhost:3000/admin",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Methodology",
+      "url": "http://localhost:3000/methodology",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Coach",
+      "url": "http://localhost:3000/coach",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "404 Page",
+      "url": "http://localhost:3000/nonexistent-page-test",
+      "status": 404,
+      "expected": 404,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-SPC",
+      "url": "http://localhost:3000/tools/ai-spc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-DFMEA",
+      "url": "http://localhost:3000/tools/ai-dfmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-PFMEA",
+      "url": "http://localhost:3000/tools/ai-pfmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Toolbox Home",
+      "url": "http://localhost:3000/tools/quality-toolbox",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Knowledge Graph",
+      "url": "http://localhost:3000/tools/quality-toolbox/graph",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Learning Path",
+      "url": "http://localhost:3000/tools/quality-toolbox/learn",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Smart Recommend",
+      "url": "http://localhost:3000/tools/quality-toolbox/recommend",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop Index",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: fishbone",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/fishbone",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: five-whys",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/five-whys",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: pareto",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/pareto",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: checksheet",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/checksheet",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: histogram",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/histogram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: scatter",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/scatter",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: controlchart",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/controlchart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: flowchart",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/flowchart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: sipoc",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/sipoc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: fmea",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/fmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: process-capability",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/process-capability",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: normal-plot",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/normal-plot",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: hypothesis-test",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/hypothesis-test",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: regression",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/regression",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: anova",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/anova",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: box-plot",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/box-plot",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: run-chart",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/run-chart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "WS: multi-vari",
+      "url": "http://localhost:3000/tools/quality-toolbox/workshop/multi-vari",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: cause-effect-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/cause-effect-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: check-sheet",
+      "url": "http://localhost:3000/tools/quality-toolbox/check-sheet",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: pareto-chart",
+      "url": "http://localhost:3000/tools/quality-toolbox/pareto-chart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: histogram",
+      "url": "http://localhost:3000/tools/quality-toolbox/histogram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: scatter-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/scatter-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: control-chart",
+      "url": "http://localhost:3000/tools/quality-toolbox/control-chart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: flowchart",
+      "url": "http://localhost:3000/tools/quality-toolbox/flowchart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: five-whys",
+      "url": "http://localhost:3000/tools/quality-toolbox/five-whys",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: fmea",
+      "url": "http://localhost:3000/tools/quality-toolbox/fmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: sipoc",
+      "url": "http://localhost:3000/tools/quality-toolbox/sipoc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: affinity-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/affinity-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: tree-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/tree-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: matrix-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/matrix-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: relations-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/relations-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: pdpc",
+      "url": "http://localhost:3000/tools/quality-toolbox/pdpc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: arrow-diagram",
+      "url": "http://localhost:3000/tools/quality-toolbox/arrow-diagram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Detail: matrix-data-analysis",
+      "url": "http://localhost:3000/tools/quality-toolbox/matrix-data-analysis",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Login",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Fishbone Generate",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Fishbone Expand",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "5Whys Suggest (chain)",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"current_depth\"], \"msg\": \"Field required\", \"input\": {\"problem\": \"Product"
+    },
+    {
+      "name": "5Whys Suggest (current_whys)",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"chain\"], \"msg\": \"Field required\", \"input\": {\"problem\": \"Product scratch"
+    },
+    {
+      "name": "Pareto Analyze",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Pareto Chat",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Pareto Compare",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "FMEA Standards DFMEA",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "FMEA Standards PFMEA",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Cases List",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Subscription Plans",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Usage",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    }
+  ]
+}

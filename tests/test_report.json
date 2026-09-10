@@ -1,0 +1,485 @@
+{
+  "timestamp": "2026-08-27T16:34:27.010545",
+  "total": 68,
+  "pass": 62,
+  "fail": 6,
+  "rate": "91%",
+  "results": [
+    {
+      "name": "Backend Health",
+      "url": "http://localhost:8000/health",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Frontend Root",
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Nginx Root",
+      "url": "http://localhost:8080/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "SPC Service",
+      "url": "http://localhost:8050/tools/ai-spc/app/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "MSA Service",
+      "url": "http://localhost:8052/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Login",
+      "url": "http://localhost:8000/api/v1/auth/login",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Me (authenticated)",
+      "url": "http://localhost:8000/api/v1/auth/me",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Me (no auth)",
+      "url": "http://localhost:8000/api/v1/auth/me",
+      "status": 401,
+      "result": "FAIL",
+      "detail": " | {\"detail\": \"Not authenticated\"}"
+    },
+    {
+      "name": "AI-SPC Page",
+      "url": "http://localhost:8080/tools/ai-spc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-DFMEA Page",
+      "url": "http://localhost:8080/tools/ai-dfmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-PFMEA Page",
+      "url": "http://localhost:8080/tools/ai-pfmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI-MSA (via nginx)",
+      "url": "http://localhost:8080/ai-msa/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: fishbone",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/fishbone",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: five-whys",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/five-whys",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: pareto",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/pareto",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: checksheet",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/checksheet",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: histogram",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/histogram",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: scatter",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/scatter",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: controlchart",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/controlchart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: flowchart",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/flowchart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: sipoc",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/sipoc",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: fmea",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/fmea",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: process-capability",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/process-capability",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: normal-plot",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/normal-plot",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: hypothesis-test",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/hypothesis-test",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: regression",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/regression",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: anova",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/anova",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: box-plot",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/box-plot",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: run-chart",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/run-chart",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop: multi-vari",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop/multi-vari",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Toolbox Home",
+      "url": "http://localhost:8080/tools/quality-toolbox",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Knowledge Graph",
+      "url": "http://localhost:8080/tools/quality-toolbox/graph",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Learning Path",
+      "url": "http://localhost:8080/tools/quality-toolbox/learn",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Smart Recommend",
+      "url": "http://localhost:8080/tools/quality-toolbox/recommend",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Workshop Index",
+      "url": "http://localhost:8080/tools/quality-toolbox/workshop",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "AI Health",
+      "url": "http://localhost:8000/api/v1/ai/health",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Fishbone Generate",
+      "url": "http://localhost:8000/api/v1/ai/fishbone/generate",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Fishbone Expand",
+      "url": "http://localhost:8000/api/v1/ai/fishbone/expand",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "5Whys Suggest",
+      "url": "http://localhost:8000/api/v1/ai/five-whys/suggest",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"chain\"], \"msg\": \"Field required\", \"input\": {\"proble"
+    },
+    {
+      "name": "5Whys Validate",
+      "url": "http://localhost:8000/api/v1/ai/five-whys/validate",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"chain\"], \"msg\": \"Field required\", \"input\": {\"proble"
+    },
+    {
+      "name": "Pareto Analyze",
+      "url": "http://localhost:8000/api/v1/ai/pareto/analyze",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Pareto Chat",
+      "url": "http://localhost:8000/api/v1/ai/pareto/chat",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"items\"], \"msg\": \"Field required\", \"input\": {\"questi"
+    },
+    {
+      "name": "FMEA AP",
+      "url": "http://localhost:8000/api/v1/ai/fmea/ap",
+      "status": 422,
+      "result": "FAIL",
+      "detail": " | {\"detail\": [{\"type\": \"missing\", \"loc\": [\"body\", \"severity\"], \"msg\": \"Field required\", \"input\": {\"fme"
+    },
+    {
+      "name": "FMEA Standards",
+      "url": "http://localhost:8000/api/v1/ai/fmea/standards/DFMEA",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "List Cases",
+      "url": "http://localhost:8000/api/v1/cases/",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Create Case",
+      "url": "http://localhost:8000/api/v1/cases/",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Case 4",
+      "url": "http://localhost:8000/api/v1/cases/4",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Timeline 4",
+      "url": "http://localhost:8000/api/v1/cases/4/timeline",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Messages 4",
+      "url": "http://localhost:8000/api/v1/cases/4/messages",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Generate 8D 4",
+      "url": "http://localhost:8000/api/v1/cases/4/generate-8d",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Export 8D Word 4",
+      "url": "http://localhost:8000/api/v1/cases/4/export-8d",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Analysis Upload (no file, expect 422)",
+      "url": "http://localhost:8000/api/v1/analysis/upload",
+      "status": 405,
+      "expected": 422,
+      "result": "FAIL"
+    },
+    {
+      "name": "Get Plans",
+      "url": "http://localhost:8000/api/v1/subscription/plans",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Get Usage",
+      "url": "http://localhost:8000/api/v1/subscription/usage",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Check Limit",
+      "url": "http://localhost:8000/api/v1/subscription/check-limit?action=case",
+      "status": 200,
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "Homepage",
+      "url": "http://localhost:8080/",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Login",
+      "url": "http://localhost:8080/login",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Register",
+      "url": "http://localhost:8080/register",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Tools Index",
+      "url": "http://localhost:8080/tools",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Analysis",
+      "url": "http://localhost:8080/analysis",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Pricing",
+      "url": "http://localhost:8080/pricing",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "About",
+      "url": "http://localhost:8080/about",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Cases",
+      "url": "http://localhost:8080/cases",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Cases New",
+      "url": "http://localhost:8080/cases/new",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Profile",
+      "url": "http://localhost:8080/profile",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Admin",
+      "url": "http://localhost:8080/admin",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Methodology",
+      "url": "http://localhost:8080/methodology",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    },
+    {
+      "name": "Coach",
+      "url": "http://localhost:8080/coach",
+      "status": 200,
+      "expected": 200,
+      "result": "PASS"
+    }
+  ]
+}

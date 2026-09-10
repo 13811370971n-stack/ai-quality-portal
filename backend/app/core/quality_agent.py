@@ -200,6 +200,8 @@ def build_messages(
     problem_statement: Optional[str] = None,
     root_cause: Optional[str] = None,
     context: Optional[Dict] = None,
+    evidence_summaries: Optional[List[Dict]] = None,
+    root_causes: Optional[List[Dict]] = None,
 ) -> List[Dict[str, str]]:
     """Assemble the full message list for LLM call."""
     messages = []
@@ -217,6 +219,24 @@ def build_messages(
         for k, v in context.items():
             if v:
                 system_content += f"- {k}: {v}\n"
+
+    # Inject uploaded evidence content so AI can reason over real data
+    if evidence_summaries:
+        system_content += "\n\n## \u5df2\u4e0a\u4f20\u7684\u8bc1\u636e\u6750\u6599\n"
+        for i, ev in enumerate(evidence_summaries[:8], 1):
+            system_content += "\n### \u8bc1\u636e" + str(i) + ": " + str(ev.get("title", "")) + " [" + str(ev.get("type", "")) + "]\n"
+            body = ev.get("content") or ""
+            if body:
+                system_content += body[:2000] + "\n"
+        system_content += "\n\u26a0 \u5f15\u7528\u8bc1\u636e\u65f6\u8bf7\u6807\u6ce8\u6765\u6e90\uff08\u5982\u201c\u6839\u636e\u8bc1\u636e2\u7684\u68c0\u9a8c\u6570\u636e\u201d\uff09\u3002\u4e0d\u8981\u7f16\u9020\u8bc1\u636e\u4e2d\u4e0d\u5b58\u5728\u7684\u6570\u5b57\u3002\n"
+
+    # Inject candidate root causes
+    if root_causes:
+        system_content += "\n\n## \u5f53\u524d\u5019\u9009\u6839\u56e0\u5217\u8868\n"
+        for rc in root_causes:
+            status = rc.get("status", "hypothesis")
+            mark = "[\u5df2\u786e\u8ba4]" if status == "confirmed" else "[" + str(status) + "]"
+            system_content += "- " + mark + " " + str(rc.get("category_label") or "") + " " + str(rc.get("description", "")) + "\n"
 
     system_content += "\n" + STEP_PROMPTS.get(current_step, "")
 
