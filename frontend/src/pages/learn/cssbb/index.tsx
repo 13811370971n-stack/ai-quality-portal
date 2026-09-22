@@ -145,7 +145,7 @@ export default function CSSBBOverviewPage() {
                           />
                         </div>
                         <span className="text-sm font-medium text-mckinsey-navy">
-                          {s.examPct}%
+                          {s.examPct.toFixed(1)}%
                         </span>
                         <span className="text-xs text-mckinsey-muted">{s.examQ} 题</span>
                       </div>
