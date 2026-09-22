@@ -17,6 +17,8 @@ export interface CSSBBSection {
   pages: number;
   pagePct: number;
   density: number;
+  /** 章节页路由（有独立章节页时） */
+  sectionPath?: string;
   /** 已实现内容的子节点 */
   implemented?: { slug: string; titleZh: string; bokRange: string }[];
 }
@@ -43,6 +45,10 @@ export const sections: CSSBBSection[] = [
     pages: 107,
     pagePct: 10.3,
     density: 0.77,
+    sectionPath: '/learn/cssbb/enterprise-deployment',
+    implemented: [
+      { slug: 'enterprise-deployment/six-sigma-value', titleZh: '六西格玛的价值与基础', bokRange: 'I.A.1' },
+    ],
   },
   {
     code: 'III',
