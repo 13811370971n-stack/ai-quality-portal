@@ -52,7 +52,7 @@ export default function CSSBBOverviewPage() {
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="rounded-lg border border-mckinsey-gold/40 bg-mckinsey-gold/5 p-4">
                 <div className="text-2xl font-semibold text-mckinsey-navy">
-                  {insights.softPct}%
+                  {insights.softPct.toFixed(1)}%
                   <span className="text-sm font-normal text-mckinsey-muted ml-2">
                     {insights.softQ} 题
                   </span>
@@ -61,7 +61,7 @@ export default function CSSBBOverviewPage() {
               </div>
               <div className="rounded-lg border border-mckinsey-teal/30 bg-mckinsey-teal/5 p-4">
                 <div className="text-2xl font-semibold text-mckinsey-navy">
-                  {insights.statPct}%
+                  {insights.statPct.toFixed(1)}%
                   <span className="text-sm font-normal text-mckinsey-muted ml-2">
                     {insights.statQ} 题
                   </span>

@@ -202,7 +202,7 @@ export default function CSSBBCapabilityPage() {
                             p{t.primerPages[0]}–{t.primerPages[1]} · {t.pages}页
                           </Badge>
                           <Badge className="bg-mckinsey-teal/10 text-mckinsey-teal border-mckinsey-teal/30">
-                            ≈{t.estExamQ} 题
+                            ≈{t.estExamQ.toFixed(1)} 题
                           </Badge>
                         </div>
                       </div>
